@@ -51,6 +51,10 @@ export default function CartProvider({ children }) {
     );
   }
 
+  function clearCart() {
+    setCartProducts([]);
+  }
+
   return (
     <CartContext.Provider
       value={{
@@ -61,6 +65,7 @@ export default function CartProvider({ children }) {
         removeOne,
         showForm,
         setShowForm,
+        clearCart,
         total,
       }}
     >
