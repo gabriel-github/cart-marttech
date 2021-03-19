@@ -1,17 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { CartContext } from "../../context/CartContext";
 import { products } from "../../products";
 
 import { Container } from "./style";
 
 export default function SingleProduct() {
   const { id } = useParams();
+  const { addToCart } = useContext(CartContext);
   const [product, setProduct] = useState({});
+  const history = useHistory();
 
   useEffect(() => {
     const item = products.filter((product) => product.id === id)[0];
     setProduct(item);
   }, [id]);
+
+  function addCart(product) {
+    addToCart(product);
+    history.push("/cart");
+  }
 
   return (
     <Container>
@@ -25,7 +33,9 @@ export default function SingleProduct() {
         <Container.Details>{product.description}</Container.Details>
 
         <Container.Price>{product.price}</Container.Price>
-        <Container.Button>adicionar ao carrinho</Container.Button>
+        <Container.Button onClick={() => addCart(product)}>
+          adicionar ao carrinho
+        </Container.Button>
       </Container.Description>
     </Container>
   );

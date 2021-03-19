@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container } from "./style";
-import { products } from "../../products";
 import ProductOfCart from "../../components/ProductOfCart";
+import { CartContext } from "../../context/CartContext";
 
 export default function Cart() {
+  const { cartProducts } = useContext(CartContext);
+
   return (
     <Container>
-      {products.length > 0 ? (
+      {cartProducts.length > 0 ? (
         <Container.Main>
           <Container.Descriptors>
             <p>product</p>
@@ -15,7 +17,7 @@ export default function Cart() {
             <p>subtotal</p>
           </Container.Descriptors>
 
-          {products.map((product, index) => (
+          {cartProducts.map((product, index) => (
             <ProductOfCart product={product} key={index} />
           ))}
 
