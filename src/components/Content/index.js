@@ -1,11 +1,12 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
+import Products from "../../pages/Products";
 
 export default function Content() {
   return (
     <Switch>
       <Route path="/" exact>
-        <h1>produtos</h1>
+        <Products />
       </Route>
       <Route path="/cart">
         <h1>cart</h1>
