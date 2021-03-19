@@ -64,6 +64,7 @@ export default function CartProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem("cartProducts", JSON.stringify(cartProducts));
+
     setTotal(
       cartProducts.reduce((acc, product) => {
         return (acc += product.price * product.amount);

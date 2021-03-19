@@ -16,34 +16,29 @@ export default function Form() {
 
   const { addClientInList } = useContext(RequestsContext);
 
-  const handleSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
+  const handleSubmit = useCallback(() => {
+    const cpfValidation = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
 
-      const cpfValidation = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+    if (cpfValidation.test(cpfInputRef.current.value)) {
+      const client = {
+        moment: new Date().toLocaleString(),
+        total: total,
+        name: nameInputRef.current.value,
+        CPF: cpfInputRef.current.value,
+        requests: cartProducts,
+      };
 
-      if (cpfValidation.test(cpfInputRef.current.value)) {
-        const client = {
-          moment: new Date().toLocaleString(),
-          total: total,
-          name: nameInputRef.current.value,
-          CPF: cpfInputRef.current.value,
-          requests: cartProducts,
-        };
+      addClientInList(client);
+      setShowForm(false);
+      clearCart();
+    } else {
+      setErrorAlert(true);
 
-        addClientInList(client);
-        setShowForm(false);
-        clearCart();
-      } else {
-        setErrorAlert(true);
-
-        setTimeout(() => {
-          setErrorAlert(false);
-        }, 3 * 1000);
-      }
-    },
-    [cartProducts, total, setShowForm, clearCart, addClientInList]
-  );
+      setTimeout(() => {
+        setErrorAlert(false);
+      }, 3 * 1000);
+    }
+  }, [cartProducts, total, setShowForm, clearCart, addClientInList]);
 
   return (
     <Container>

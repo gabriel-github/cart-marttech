@@ -6,8 +6,9 @@ import { products } from "../../products";
 import { Container } from "./style";
 
 export default function SingleProduct() {
-  const { id } = useParams();
   const { addToCart } = useContext(CartContext);
+  const { id } = useParams();
+
   const [product, setProduct] = useState({});
   const history = useHistory();
 

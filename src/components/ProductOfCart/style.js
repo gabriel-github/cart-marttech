@@ -51,7 +51,8 @@ Container.WrapperQuantity = styled.div`
   margin-top: 1rem;
 
   p {
-    font-size: 1.2rem;
+    margin: 0;
+    font-size: 1.5rem;
   }
 
   button {
