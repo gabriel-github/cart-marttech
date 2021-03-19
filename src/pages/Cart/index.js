@@ -1,10 +1,13 @@
 import React, { useContext } from "react";
 import { Container } from "./style";
-import ProductOfCart from "../../components/ProductOfCart";
 import { CartContext } from "../../context/CartContext";
+import ProductOfCart from "../../components/ProductOfCart";
+
+import { useHistory } from "react-router-dom";
 
 export default function Cart() {
-  const { cartProducts } = useContext(CartContext);
+  const { cartProducts, total } = useContext(CartContext);
+  const history = useHistory();
 
   return (
     <Container>
@@ -22,14 +25,15 @@ export default function Cart() {
           ))}
 
           <Container.OrderWrapper>
-            <Container.WrapperButtons>
-              <Container.Button>esvaziar carrinho</Container.Button>
-              <Container.Button>continuar comprando</Container.Button>
-            </Container.WrapperButtons>
+            <Container.WrapperButton>
+              <Container.Button onClick={() => history.push("/")}>
+                continuar comprando
+              </Container.Button>
+            </Container.WrapperButton>
 
             <Container.Order>
               <h4>
-                Total: <span>55555</span>
+                Total: <span>{total.toFixed(2)}</span>
               </h4>
               <button>finalizar compra</button>
             </Container.Order>

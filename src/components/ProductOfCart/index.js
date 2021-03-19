@@ -3,7 +3,7 @@ import { CartContext } from "../../context/CartContext";
 import { Container } from "./style";
 
 export default function ProductOfCart({ product }) {
-  const { removeToCart } = useContext(CartContext);
+  const { removeToCart, addOne, removeOne } = useContext(CartContext);
   const subtotal = product.price * product.amount;
 
   return (
@@ -16,14 +16,14 @@ export default function ProductOfCart({ product }) {
       <p>{product.price}</p>
 
       <Container.WrapperQuantity>
-        <button>-</button>
+        <button onClick={() => removeOne(product)}>-</button>
 
         <p>{product.amount}</p>
 
-        <button>+</button>
+        <button onClick={() => addOne(product)}>+</button>
       </Container.WrapperQuantity>
 
-      <p>{subtotal}</p>
+      <p>{subtotal.toFixed(2)}</p>
 
       <Container.ButtonRemove onClick={() => removeToCart(product)}>
         x

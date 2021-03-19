@@ -4,6 +4,11 @@ export const CartContext = createContext({});
 
 export default function CartProvider({ children }) {
   const [cartProducts, setCartProducts] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+
+  const total = cartProducts.reduce((acc, product) => {
+    return (acc += product.price * product.amount);
+  }, 0);
 
   function addToCart(item) {
     const alreadyExists = cartProducts.filter(
@@ -18,7 +23,32 @@ export default function CartProvider({ children }) {
   }
 
   function removeToCart(item) {
+    item.amount = 1;
     setCartProducts(cartProducts.filter((product) => product.id !== item.id));
+  }
+
+  function addOne(item) {
+    setCartProducts(
+      cartProducts.map((product) => {
+        if (product.id === item.id) {
+          item.amount += 1;
+        }
+
+        return product;
+      })
+    );
+  }
+
+  function removeOne(item) {
+    setCartProducts(
+      cartProducts.map((product) => {
+        if (product.id === item.id) {
+          item.amount = item.amount > 1 ? (item.amount -= 1) : 1;
+        }
+
+        return product;
+      })
+    );
   }
 
   return (
@@ -27,6 +57,11 @@ export default function CartProvider({ children }) {
         cartProducts,
         addToCart,
         removeToCart,
+        addOne,
+        removeOne,
+        showForm,
+        setShowForm,
+        total,
       }}
     >
       {children}

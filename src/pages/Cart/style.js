@@ -25,7 +25,7 @@ Container.Main = styled.main`
   padding: 1rem;
 `;
 
-Container.WrapperButtons = styled.div`
+Container.WrapperButton = styled.div`
   display: flex;
   flex-direction: column;
 `;
