@@ -1,14 +1,13 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 export const CartContext = createContext({});
 
 export default function CartProvider({ children }) {
-  const [cartProducts, setCartProducts] = useState([]);
-  const [showForm, setShowForm] = useState(false);
+  const data = JSON.parse(localStorage.getItem("cartProducts"));
 
-  const total = cartProducts.reduce((acc, product) => {
-    return (acc += product.price * product.amount);
-  }, 0);
+  const [cartProducts, setCartProducts] = useState(data ?? []);
+  const [showForm, setShowForm] = useState(false);
+  const [total, setTotal] = useState(0);
 
   function addToCart(item) {
     const alreadyExists = cartProducts.filter(
@@ -16,7 +15,15 @@ export default function CartProvider({ children }) {
     );
 
     if (alreadyExists.length > 0) {
-      item.amount += 1;
+      setCartProducts(
+        cartProducts.map((product) => {
+          if (product.id === item.id) {
+            item.amount += 1;
+          }
+
+          return item;
+        })
+      );
     } else {
       setCartProducts([...cartProducts, item]);
     }
@@ -55,6 +62,15 @@ export default function CartProvider({ children }) {
     setCartProducts([]);
   }
 
+  useEffect(() => {
+    localStorage.setItem("cartProducts", JSON.stringify(cartProducts));
+    setTotal(
+      cartProducts.reduce((acc, product) => {
+        return (acc += product.price * product.amount);
+      }, 0)
+    );
+  }, [cartProducts]);
+
   return (
     <CartContext.Provider
       value={{
@@ -63,9 +79,9 @@ export default function CartProvider({ children }) {
         removeToCart,
         addOne,
         removeOne,
+        clearCart,
         showForm,
         setShowForm,
-        clearCart,
         total,
       }}
     >

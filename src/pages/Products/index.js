@@ -18,12 +18,14 @@ export default function Products() {
   return (
     <Container>
       <Container.Section>
-        <Container.Input
-          type="text"
-          placeholder="buscar..."
-          value={soughtProduct}
-          onChange={(e) => setSougthProduct(e.target.value)}
-        />
+        <Container.WrapperInput>
+          <Container.Input
+            type="text"
+            placeholder="buscar..."
+            value={soughtProduct}
+            onChange={(e) => setSougthProduct(e.target.value)}
+          />
+        </Container.WrapperInput>
 
         <Container.Main>
           {filteredProduct.length > 0 ? (

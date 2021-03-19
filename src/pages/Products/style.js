@@ -18,6 +18,12 @@ Container.Section = styled.section`
   color: var(--title);
 `;
 
+Container.WrapperInput = styled.div`
+  width: 100%;
+  display: flex;
+
+  justify-content: center;
+`;
 Container.Input = styled.input`
   width: 15rem;
   border: 2px solid var(--gray-line);
